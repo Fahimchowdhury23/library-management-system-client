@@ -34,7 +34,15 @@ const BookDetails = () => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const borrowedBookData = Object.fromEntries(formData.entries());
+    const borrowedBook = Object.fromEntries(formData.entries());
+
+    const borrowersData = {
+      borrowerEmail: borrowedBook.email,
+      borrowerUserName: borrowedBook.name,
+      borrowedDate: new Date().toLocaleDateString(),
+      ...borrowedBook,
+      ...bookDetails,
+    };
 
     axios
       .patch(`http://localhost:3000/books/${id}`)
@@ -43,6 +51,19 @@ const BookDetails = () => {
         if (res.data.modifiedCount) {
           toast.dismiss();
           toast.success(`You borrowed ${bookDetails.title}`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    axios
+      .post(`http://localhost:3000/borrows`, borrowersData)
+      .then((res) => {
+        if (res.data.insertedId) {
+          e.target.reset();
+          toast.dismiss();
+          toast.success("Book added Successfully!");
         }
       })
       .catch((error) => {
