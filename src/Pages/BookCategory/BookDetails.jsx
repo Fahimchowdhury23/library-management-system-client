@@ -45,7 +45,7 @@ const BookDetails = () => {
     };
 
     axios
-      .patch(`http://localhost:3000/books/${id}`)
+      .patch(`http://localhost:3000/borrow/${id}`)
       .then((res) => {
         setQuantity(quantity - 1);
         if (res.data.modifiedCount) {

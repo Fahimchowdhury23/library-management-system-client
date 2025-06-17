@@ -1,12 +1,52 @@
+import axios from "axios";
 import React from "react";
 import { FaRegStar, FaStar } from "react-icons/fa6";
 import Rating from "react-rating";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
 
-const BorrowedBookCard = ({ book }) => {
+const BorrowedBookCard = ({ setBorrowedBooks, borrowedBooks, book }) => {
   const [month, day, year] = book.returnDate.split("/");
 
   const returnDate = `${day}/${month}/${year}`;
+  const handleSubmitReturn = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, return it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://localhost:3000/borrows/${book._id}`)
+          .then((res) => {
+            console.log(res.data);
+            return axios.patch(`http://localhost:3000/return/${book._id}`);
+          })
+          .then((res) => {
+            if (res.data.modifiedCount) {
+              const remainingBooks = borrowedBooks.filter(
+                (books) => books._id !== book._id
+              );
+              setBorrowedBooks(remainingBooks);
+
+              Swal.fire({
+                title: "Returned!",
+                text: "Your book has been successfully returned.",
+                icon: "success",
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error returning book:", error);
+            Swal.fire("Error", "Something went wrong.", "error");
+          });
+      }
+    });
+  };
 
   return (
     <div className="bg-white rounded-2xl p-3 shadow-md overflow-hidden flex flex-col">
@@ -38,13 +78,6 @@ const BorrowedBookCard = ({ book }) => {
           <p>
             Return Date: <strong className="text-red-500">{returnDate}</strong>
           </p>
-
-          <p>
-            Quantity:
-            <span className=" font-semibold text-green-600">
-              {book.quantity}
-            </span>
-          </p>
         </div>
       </div>
 
@@ -61,11 +94,12 @@ const BorrowedBookCard = ({ book }) => {
           </p>
         </div>
 
-        <Link to={`/books/${book._id}`}>
-          <button className="btn w-full rounded-xl font-semibold text-lg bg-red-400 ">
-            Return This Book
-          </button>
-        </Link>
+        <button
+          onClick={handleSubmitReturn}
+          className="btn w-full rounded-xl font-semibold text-lg bg-red-400 "
+        >
+          Return This Book
+        </button>
       </div>
     </div>
   );
