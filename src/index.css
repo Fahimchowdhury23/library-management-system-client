@@ -1,2 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+
+* {
+  font-family: "Playfair Display", serif;
+}
+
 @import "tailwindcss";
 @plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  --color-primary: #f7f9eb;
+  --color-secondary: #ebd5c2;
+  --color-accent: #03a791;
+  --color-neutral: #81e7af;
+}
+
+.nav-link {
+  @apply relative rounded px-2 lg:px-3 py-1 lg:text-lg backdrop-blur-md transition-transform ease-out duration-150;
+}
+.nav-link.active {
+  @apply font-bold;
+}
