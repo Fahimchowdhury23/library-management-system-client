@@ -35,7 +35,10 @@ const AddBook = () => {
     };
 
     axios
-      .post("http://localhost:3000/books", bookData)
+      .post(
+        "https://library-management-system-server-two.vercel.app/books",
+        bookData
+      )
       .then((res) => {
         if (res.data.insertedId) {
           e.target.reset();

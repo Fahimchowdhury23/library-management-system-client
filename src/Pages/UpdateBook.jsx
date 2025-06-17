@@ -13,9 +13,13 @@ const UpdateBook = () => {
   const categories = ["Novel", "Thriller", "History", "Drama", "Sci-Fi"];
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/books/${id}`).then((res) => {
-      setSelectedBook(res.data);
-    });
+    axios
+      .get(
+        `https://library-management-system-server-two.vercel.app/books/${id}`
+      )
+      .then((res) => {
+        setSelectedBook(res.data);
+      });
   }, [id]);
 
   const handleFormUpdate = (e) => {
@@ -24,20 +28,25 @@ const UpdateBook = () => {
     const formData = new FormData(form);
     const updatedBook = Object.fromEntries(formData.entries());
 
-    axios.put(`http://localhost:3000/books/${id}`, updatedBook).then((res) => {
-      if (res.data.modifiedCount) {
-        toast.dismiss();
-        toast.success("Book updated Successfully!", {
-          style: {
-            background: "#03a791",
-            color: "white",
-          },
-        });
-      } else {
-        toast.dismiss();
-        toast.error("No changes has been made");
-      }
-    });
+    axios
+      .put(
+        `https://library-management-system-server-two.vercel.app/books/${id}`,
+        updatedBook
+      )
+      .then((res) => {
+        if (res.data.modifiedCount) {
+          toast.dismiss();
+          toast.success("Book updated Successfully!", {
+            style: {
+              background: "#03a791",
+              color: "white",
+            },
+          });
+        } else {
+          toast.dismiss();
+          toast.error("No changes has been made");
+        }
+      });
   };
 
   return (

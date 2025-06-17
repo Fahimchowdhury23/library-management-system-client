@@ -9,7 +9,9 @@ const BorrowedBooks = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/borrows?email=${user.email}`)
+      .get(
+        `https://library-management-system-server-two.vercel.app/borrows?email=${user.email}`
+      )
       .then((res) => setBorrowedBooks(res.data));
   }, [user]);
 

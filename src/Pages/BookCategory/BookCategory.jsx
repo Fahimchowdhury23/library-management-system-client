@@ -1,9 +1,9 @@
 import React, { use } from "react";
 import { Link } from "react-router";
 
-const bookPromise = fetch("http://localhost:3000/books").then((res) =>
-  res.json()
-);
+const bookPromise = fetch(
+  "https://library-management-system-server-two.vercel.app/books"
+).then((res) => res.json());
 
 const descriptions = {
   Novel:

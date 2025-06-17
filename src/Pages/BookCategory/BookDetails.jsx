@@ -24,10 +24,14 @@ const BookDetails = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/books/${id}`).then((res) => {
-      setBookDetails(res.data);
-      setQuantity(res.data.quantity);
-    });
+    axios
+      .get(
+        `https://library-management-system-server-two.vercel.app/books/${id}`
+      )
+      .then((res) => {
+        setBookDetails(res.data);
+        setQuantity(res.data.quantity);
+      });
   }, [id]);
 
   const handleFormBorrow = (e) => {
@@ -45,7 +49,9 @@ const BookDetails = () => {
     };
 
     axios
-      .patch(`http://localhost:3000/borrow/${id}`)
+      .patch(
+        `https://library-management-system-server-two.vercel.app/borrow/${id}`
+      )
       .then((res) => {
         setQuantity(quantity - 1);
         if (res.data.modifiedCount) {
@@ -58,7 +64,10 @@ const BookDetails = () => {
       });
 
     axios
-      .post(`http://localhost:3000/borrows`, borrowersData)
+      .post(
+        `https://library-management-system-server-two.vercel.app/borrows`,
+        borrowersData
+      )
       .then((res) => {
         if (res.data.insertedId) {
           e.target.reset();

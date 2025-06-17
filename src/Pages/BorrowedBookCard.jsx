@@ -21,10 +21,14 @@ const BorrowedBookCard = ({ setBorrowedBooks, borrowedBooks, book }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:3000/borrows/${book._id}`)
+          .delete(
+            `https://library-management-system-server-two.vercel.app/borrows/${book._id}`
+          )
           .then((res) => {
             console.log(res.data);
-            return axios.patch(`http://localhost:3000/return/${book._id}`);
+            return axios.patch(
+              `https://library-management-system-server-two.vercel.app/return/${book._id}`
+            );
           })
           .then((res) => {
             if (res.data.modifiedCount) {

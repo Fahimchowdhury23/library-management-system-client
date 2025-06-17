@@ -27,7 +27,11 @@ const router = createBrowserRouter([
       {
         path: "allBooks",
         loader: () =>
-          axios.get("http://localhost:3000/books").then((res) => res.data),
+          axios
+            .get(
+              "https://library-management-system-server-two.vercel.app/books"
+            )
+            .then((res) => res.data),
         element: (
           <PrivateRoute>
             <AllBooks></AllBooks>
@@ -64,7 +68,9 @@ const router = createBrowserRouter([
         element: <CategoryCard></CategoryCard>,
         loader: ({ params }) =>
           axios
-            .get(`http://localhost:3000/books?category=${params.category}`)
+            .get(
+              `https://library-management-system-server-two.vercel.app/books?category=${params.category}`
+            )
             .then((res) => res.data),
         hydrateFallbackElement: <Spinner></Spinner>,
       },
