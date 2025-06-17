@@ -1,7 +1,27 @@
-import React from "react";
-import { Link, NavLink } from "react-router";
+import React, { use } from "react";
+import { Link, NavLink, useNavigate } from "react-router";
+import AuthContext from "../../Contexts/AuthContext";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
+  const { user, signOutUser } = use(AuthContext);
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    signOutUser()
+      .then(() => {
+        toast.dismiss();
+        toast.success("You've logged out successfully!", {
+          className: "text-center",
+        });
+        navigate("/auth/login");
+      })
+      .catch((error) => {
+        toast.dismiss();
+        toast.error("Something went wrong", error?.message);
+      });
+  };
+
   return (
     <div className="navbar shadow-sm">
       <div className="flex items-center justify-between mx-10 flex-1">
@@ -34,42 +54,44 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="flex gap-2 text-lg font-medium">
-            <Link to="/auth/login">
-              <button className="lg:text-lg btn bg-gradient-to-l from-neutral to-accent rounded-full p-3 lg:p-5 border-none font-semibold">
-                Login
-              </button>
-            </Link>
-
-            <Link to="/auth/register">
-              <button className="lg:text-lg btn bg-gradient-to-l from-neutral to-accent rounded-full p-3 lg:p-5 border-none font-semibold">
-                Register
-              </button>
-            </Link>
-          </div>
-
-          <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                />
+          {user ? (
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="w-10 rounded-full">
+                  <img alt={user?.displayName} src={user?.photoURL} />
+                </div>
               </div>
+              <ul
+                tabIndex={0}
+                className="menu dropdown-content font-medium bg-neutral rounded-box z-1 mt-3 w-52 p-2 shadow"
+              >
+                <li>
+                  <a>{user?.displayName}</a>
+                </li>
+                <li>
+                  <a onClick={handleSignOut}>Logout</a>
+                </li>
+              </ul>
             </div>
-            <ul
-              tabIndex={0}
-              className="menu dropdown-content font-medium bg-neutral rounded-box z-1 mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <a>Logout</a>
-              </li>
-            </ul>
-          </div>
+          ) : (
+            <div className="flex gap-2 text-lg font-medium">
+              <Link to="/auth/login">
+                <button className="lg:text-lg btn bg-gradient-to-l from-neutral to-accent rounded-full p-3 lg:p-5 border-none font-semibold">
+                  Login
+                </button>
+              </Link>
+
+              <Link to="/auth/register">
+                <button className="lg:text-lg btn bg-gradient-to-l from-neutral to-accent rounded-full p-3 lg:p-5 border-none font-semibold">
+                  Register
+                </button>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>
