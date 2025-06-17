@@ -42,14 +42,12 @@ const UpdateBook = () => {
 
   return (
     <div>
-      <h1>Update your book from here</h1>
-
       <form
         onSubmit={handleFormUpdate}
-        className="w-9/12 mx-auto py-5 flex flex-col gap-3 p-4"
+        className="w-4/6 mx-auto py-5 flex flex-col gap-3 p-4"
       >
         <p className="w-10/12 mb-3 text-2xl font-semibold mx-auto text-center text-accent">
-          Update Book
+          Update Your Book Here
         </p>
         <p className="border-b-2 w-10/12 mx-auto border-accent/70"></p>
 
