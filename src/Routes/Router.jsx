@@ -9,6 +9,9 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import PrivateRoute from "../Provider/PrivateRoute";
 import ErrorPage from "../Components/ErrorPage/ErrorPage";
+import Spinner from "../Components/Spinner/Spinner";
+import axios from "axios";
+import UpdateBook from "../Pages/UpdateBook";
 
 const router = createBrowserRouter([
   {
@@ -21,11 +24,14 @@ const router = createBrowserRouter([
       },
       {
         path: "allBooks",
+        loader: () =>
+          axios.get("http://localhost:3000/books").then((res) => res.data),
         element: (
           <PrivateRoute>
             <AllBooks></AllBooks>
           </PrivateRoute>
         ),
+        hydrateFallbackElement: <Spinner></Spinner>,
       },
       {
         path: "addBook",
@@ -40,6 +46,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <BorrowedBooks></BorrowedBooks>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "books/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateBook></UpdateBook>
           </PrivateRoute>
         ),
       },
