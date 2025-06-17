@@ -23,3 +23,9 @@
 .nav-link.active {
   @apply font-bold;
 }
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  color: #03a791;
+  font-weight: bolder;
+}
