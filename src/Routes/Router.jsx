@@ -12,6 +12,8 @@ import ErrorPage from "../Components/ErrorPage/ErrorPage";
 import Spinner from "../Components/Spinner/Spinner";
 import axios from "axios";
 import UpdateBook from "../Pages/UpdateBook";
+import CategoryCard from "../Pages/BookCategory/CategoryCard";
+import BookDetails from "../Pages/BookCategory/BookDetails";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +56,23 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <UpdateBook></UpdateBook>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "category/:category",
+        element: <CategoryCard></CategoryCard>,
+        loader: ({ params }) =>
+          axios
+            .get(`http://localhost:3000/books?category=${params.category}`)
+            .then((res) => res.data),
+        hydrateFallbackElement: <Spinner></Spinner>,
+      },
+      {
+        path: "details/:id",
+        element: (
+          <PrivateRoute>
+            <BookDetails></BookDetails>
           </PrivateRoute>
         ),
       },

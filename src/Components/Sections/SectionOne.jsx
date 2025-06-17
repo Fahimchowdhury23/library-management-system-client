@@ -8,8 +8,8 @@ const SectionOne = () => {
       className="pt-12 lg:pt-20 pb-16 text-center w-11/12 lg:w-10/12 mx-auto"
     >
       <div className="flex flex-col gap-4">
-        <h2 className="font-bold text-accent text-4xl">
-          A quick look at how far LibraFlow has come.
+        <h2 className="font-semibold text-accent text-4xl">
+          A quick look at how far <strong>LibraFlow</strong> has come.
         </h2>
         <p className="opacity-80 text-lg pb-8">
           Thousands of books, one destination — where every reader finds their
