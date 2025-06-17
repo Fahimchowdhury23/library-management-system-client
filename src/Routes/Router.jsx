@@ -7,6 +7,8 @@ import BorrowedBooks from "../Pages/BorrowedBooks";
 import AuthenticationLayout from "../Layout/AuthenticationLayout";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import PrivateRoute from "../Provider/PrivateRoute";
+import ErrorPage from "../Components/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -19,15 +21,27 @@ const router = createBrowserRouter([
       },
       {
         path: "allBooks",
-        element: <AllBooks></AllBooks>,
+        element: (
+          <PrivateRoute>
+            <AllBooks></AllBooks>
+          </PrivateRoute>
+        ),
       },
       {
         path: "addBook",
-        element: <AddBook></AddBook>,
+        element: (
+          <PrivateRoute>
+            <AddBook></AddBook>
+          </PrivateRoute>
+        ),
       },
       {
         path: "borrowedBooks",
-        element: <BorrowedBooks></BorrowedBooks>,
+        element: (
+          <PrivateRoute>
+            <BorrowedBooks></BorrowedBooks>
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -44,6 +58,10 @@ const router = createBrowserRouter([
         element: <Register></Register>,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <ErrorPage></ErrorPage>,
   },
 ]);
 
