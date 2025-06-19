@@ -160,7 +160,7 @@ const BookDetails = () => {
              ${
                quantity === 0
                  ? "btn-disabled cursor-not-allowed"
-                 : "bg-primary/50 hover:bg-accent/80 cursor-pointer"
+                 : "bg-primary/50 hover:bg-primary/20 cursor-pointer"
              }`}
             onClick={() => {
               const alreadyBorrowed = borrowedBooks.find(
