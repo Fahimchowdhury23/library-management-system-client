@@ -1,58 +1,55 @@
-import axios from "axios";
-import React, { use, useEffect, useState } from "react";
-import { useParams } from "react-router";
-import AuthContext from "../Contexts/AuthContext";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import { FaBook, FaRegImage, FaStar, FaTags, FaUser } from "react-icons/fa";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../Components/Hooks/UseAxiosSecure";
 
 const UpdateBook = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
+  const [loading, setLoading] = useState(null);
 
   const [selectedBook, setSelectedBook] = useState({});
-  const { loading } = use(AuthContext);
   const categories = ["Novel", "Thriller", "History", "Drama", "Sci-Fi"];
 
   useEffect(() => {
-    axios
-      .get(
-        `https://library-management-system-server-two.vercel.app/books/${id}`
-      )
-      .then((res) => {
-        setSelectedBook(res.data);
-      });
-  }, [id]);
+    axiosSecure.get(`/books/${id}`).then((res) => {
+      setSelectedBook(res.data);
+    });
+  }, [id, axiosSecure]);
 
-  const handleFormUpdate = (e) => {
+  const handleFormUpdateBook = (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
     const updatedBook = Object.fromEntries(formData.entries());
+    setLoading(true);
 
-    axios
-      .put(
-        `https://library-management-system-server-two.vercel.app/books/${id}`,
-        updatedBook
-      )
-      .then((res) => {
-        if (res.data.modifiedCount) {
-          toast.dismiss();
-          toast.success("Book updated Successfully!", {
-            style: {
-              background: "#03a791",
-              color: "white",
-            },
-          });
-        } else {
-          toast.dismiss();
-          toast.error("No changes has been made");
-        }
-      });
+    axiosSecure.put(`/books/${id}`, updatedBook).then((res) => {
+      if (res.data.modifiedCount) {
+        toast.dismiss();
+        toast.success("Book updated successfully!", {
+          style: {
+            background: "#03a791",
+            color: "white",
+          },
+        });
+        setLoading(false);
+        navigate(`/details/${id}`);
+      } else {
+        setLoading(false);
+        toast.dismiss();
+        toast.error("No changes has been made");
+      }
+    });
   };
 
   return (
     <div>
+      <title>Update Book Form </title>
       <form
-        onSubmit={handleFormUpdate}
+        onSubmit={handleFormUpdateBook}
         className="w-4/6 mx-auto py-5 flex flex-col gap-3 p-4"
       >
         <p className="w-10/12 mb-3 text-2xl font-semibold mx-auto text-center text-accent">
@@ -109,7 +106,7 @@ const UpdateBook = () => {
         <select
           name="category"
           defaultValue={selectedBook.category}
-          className="px-4 py-3 rounded-xl bg-white text-accent focus:outline-none focus:ring-1 focus:ring-accent"
+          className="px-4 py-3 cursor-pointer rounded-xl bg-white text-accent focus:outline-none focus:ring-1 focus:ring-accent"
         >
           {categories.map((type) => (
             <option key={type}>{type}</option>

@@ -69,7 +69,7 @@ const Navbar = () => {
 
         <div className="flex items-center gap-2">
           <button
-            className="cursor-pointer hover:bg-primary/60 rounded-full p-1"
+            className="cursor-pointer hover:bg-neutral/60 rounded-full p-1"
             onClick={toggleTheme}
           >
             {theme === "dark" ? (
@@ -101,21 +101,25 @@ const Navbar = () => {
 
           {user ? (
             <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar"
-              >
-                <div className="w-10 rounded-full">
-                  <img alt={user?.displayName} src={user?.photoURL} />
+              <div className="p-1 hover:bg-neutral rounded-full">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img alt={user?.displayName} src={user?.photoURL} />
+                  </div>
                 </div>
               </div>
               <ul
                 tabIndex={0}
-                className="menu dropdown-content font-medium bg-neutral rounded-box z-1 mt-3 w-52 p-2 shadow"
+                className="menu dropdown-content font-medium bg-gradient-to-l from-accent to-neutral rounded-box z-1 mt-3 w-52 p-2 shadow"
               >
                 <li>
-                  <a>{user?.displayName}</a>
+                  <a onClick={() => navigate("/borrowedBooks")}>
+                    {user?.displayName}
+                  </a>
                 </li>
                 <li>
                   <a onClick={handleSignOut}>Logout</a>

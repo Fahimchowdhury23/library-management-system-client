@@ -11,11 +11,19 @@ const CategoryCard = () => {
 
   return (
     <div className="w-11/12 mx-auto py-12">
+      <title>Category Books | LibraFlow</title>
       <h1 className="text-2xl font-bold text-center text-accent mb-2">
         {categoryReal} Books
       </h1>
 
       <p className="border-b-3 w-1/5 mx-auto border-accent/70 mb-3"></p>
+
+      {!books && (
+        <h2 className="text-center text-2xl font-semibold min-h-screen pt-40 text-accent drop-shadow">
+          There is no {categoryReal} book added yet! <br />
+          Sorry for the inconvenience.
+        </h2>
+      )}
 
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         {books.map((book) => (
@@ -23,11 +31,13 @@ const CategoryCard = () => {
             key={book._id}
             className="bg-white rounded-2xl p-3 shadow-md overflow-hidden flex flex-col"
           >
-            <img
-              src={book.image}
-              alt={book.title}
-              className="h-60 w-full rounded-2xl object-cover"
-            />
+            <Link to={`/details/${book._id}`}>
+              <img
+                src={book.image}
+                alt={book.title}
+                className="h-60 w-full rounded-2xl object-cover"
+              />
+            </Link>
 
             <div className="p-2 space-y-2 flex-1">
               <h2 className="text-xl font-semibold">

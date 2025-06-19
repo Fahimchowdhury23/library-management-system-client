@@ -1,30 +1,38 @@
-import React, { use } from "react";
+import React from "react";
 import { Link } from "react-router";
-
-const bookPromise = fetch(
-  "https://library-management-system-server-two.vercel.app/books"
-).then((res) => res.json());
-
-const descriptions = {
-  Novel:
-    "Stories that transport you to unforgettable worlds and unforgettable lives.",
-  Thriller: "Pulse-pounding plots packed with suspense and unexpected twists.",
-  "Sci-Fi": "Journey through futuristic worlds and bold ideas.",
-  Drama: "Emotional narratives exploring human experiences.",
-  History: "Uncover the events and people that shaped our world.",
-};
+import animationData from "../../Reading-book-animation.json";
+import Lottie from "lottie-react";
 
 const BookCategory = () => {
-  const bookData = use(bookPromise);
+  const categories = ["Novel", "Thriller", "Sci-Fi", "Drama", "History"];
 
-  const categories = [...new Set(bookData.map((book) => book.category))];
+  const descriptions = {
+    Novel:
+      "Stories that transport you to unforgettable worlds and unforgettable lives.",
+    Thriller:
+      "Pulse-pounding plots packed with suspense and unexpected twists.",
+    "Sci-Fi": "Journey through futuristic worlds and bold ideas.",
+    Drama: "Emotional narratives exploring human experiences.",
+    History: "Uncover the events and people that shaped our world.",
+  };
 
   return (
     <section>
-      <h2 className="text-center pt-16 text-3xl font-bold text-accent drop-shadow mb-2">
+      <h2 className="text-center pt-20 text-3xl font-bold text-accent drop-shadow mb-2">
         Book Categories
       </h2>
-      <p className="border-b-3 w-1/3 mx-auto border-accent/70 mb-6"></p>
+      <p className="border-b-3 w-1/3 mx-auto border-accent/70 mb-4"></p>
+
+      <p className="text-center text-2xl font-bold text-accent drop-shadow mb-4">
+        Hop In — Choose the Genre That Sparks Your Curiosity!
+      </p>
+
+      <div
+        className="m-auto cursor-pointer"
+        style={{ width: 400, height: 400 }}
+      >
+        <Lottie animationData={animationData} loop={true} autoplay={true} />
+      </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 pt-4 pb-10 w-10/12 mx-auto">
         {categories.map((category, idx) => (

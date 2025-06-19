@@ -1,7 +1,6 @@
 import React, { use, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import AuthContext from "../../Contexts/AuthContext";
-import axios from "axios";
 import {
   FaCalendar,
   FaRegCircleUser,
@@ -14,31 +13,33 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
 import Rating from "react-rating";
+import useAxiosSecure from "../../Components/Hooks/UseAxiosSecure";
 
 const BookDetails = () => {
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const [bookDetails, setBookDetails] = useState({});
+  const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [quantity, setQuantity] = useState(bookDetails?.quantity);
-  const { user, loading } = use(AuthContext);
+  const [loading, setLoading] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const { user } = use(AuthContext);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://library-management-system-server-two.vercel.app/books/${id}`
-      )
-      .then((res) => {
-        setBookDetails(res.data);
-        setQuantity(res.data.quantity);
-      });
-  }, [id]);
+    axiosSecure.get(`/books/${id}`).then((res) => {
+      setBookDetails(res.data);
+      setQuantity(res.data.quantity);
+    });
+  }, [id, axiosSecure]);
 
   const handleFormBorrow = (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
     const borrowedBook = Object.fromEntries(formData.entries());
+    setLoading(true);
 
     const borrowersData = {
       borrowerEmail: borrowedBook.email,
@@ -48,39 +49,56 @@ const BookDetails = () => {
       ...bookDetails,
     };
 
-    axios
-      .patch(
-        `https://library-management-system-server-two.vercel.app/borrow/${id}`
-      )
-      .then((res) => {
-        setQuantity(quantity - 1);
-        if (res.data.modifiedCount) {
-          toast.dismiss();
-          toast.success(`You borrowed ${bookDetails.title}`);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-    axios
-      .post(
-        `https://library-management-system-server-two.vercel.app/borrows`,
-        borrowersData
-      )
+    axiosSecure
+      .post(`/borrows?email=${user?.email}`, borrowersData)
       .then((res) => {
         if (res.data.insertedId) {
           e.target.reset();
-          toast.dismiss();
-          toast.success("Book added Successfully!");
+          setBorrowedBooks([...borrowedBooks, { _id: id }]);
+
+          axiosSecure
+            .patch(`/borrow/${id}`)
+            .then((res) => {
+              setQuantity(quantity - 1);
+              if (res.data.modifiedCount) {
+                setLoading(false);
+                toast.dismiss();
+                toast.success(
+                  `${bookDetails.title} added to your borrowed list`
+                );
+                navigate("/borrowedBooks");
+              }
+            })
+            .catch((error) => {
+              setLoading(false);
+              console.error(error);
+              toast.dismiss();
+              toast.error("Something went wrong");
+            });
         }
       })
       .catch((error) => {
-        console.error(error);
+        if (error.status === 460) {
+          setLoading(false);
+          toast.dismiss();
+          return toast("You can't borrow more than 3 books", {
+            icon: "⚠️",
+          });
+        } else {
+          setLoading(false);
+          toast.dismiss();
+          return toast.error("An unexpected error occurred");
+        }
       });
 
     document.getElementById("my_modal_5").close();
   };
+
+  useEffect(() => {
+    axiosSecure.get(`/borrows?email=${user.email}`).then((res) => {
+      setBorrowedBooks(res.data);
+    });
+  }, [axiosSecure, user]);
 
   const closeModal = () => {
     document.getElementById("my_modal_5").close();
@@ -88,6 +106,7 @@ const BookDetails = () => {
 
   return (
     <div className="max-w-4xl mx-auto bg-gradient-to-tr from-accent to-white rounded-xl shadow-md p-8 my-10">
+      <title>Book Details Page | LibraFlow</title>
       <div className="flex flex-col md:flex-row gap-6">
         <img
           src={bookDetails.image}
@@ -143,9 +162,24 @@ const BookDetails = () => {
                  ? "btn-disabled cursor-not-allowed"
                  : "bg-primary/50 hover:bg-accent/80 cursor-pointer"
              }`}
-            onClick={() => document.getElementById("my_modal_5").showModal()}
+            onClick={() => {
+              const alreadyBorrowed = borrowedBooks.find(
+                (book) => book._id === id
+              );
+
+              if (alreadyBorrowed) {
+                toast.dismiss();
+                return toast.error("You already borrowed this book.");
+              }
+
+              document.getElementById("my_modal_5").showModal();
+            }}
           >
-            Borrow
+            {loading ? (
+              <span className="loading loading-spinner text-accent"></span>
+            ) : (
+              "Borrow"
+            )}
           </button>
 
           <dialog
@@ -172,16 +206,17 @@ const BookDetails = () => {
                   </p>
                   <p className="border-b-2 mb-4 border-accent/70"></p>
 
-                  <div className="w-full max-w-md mx-auto z-10">
-                    <label className=" mb-2 font-medium flex items-center gap-2 text-accent/70">
+                  <div className="text-center z-10">
+                    <label className="mb-2 font-medium flex justify-center items-center gap-2 text-accent/70">
                       <FaCalendar size={24} /> Return Date:
                     </label>
                     <DatePicker
                       selected={selectedDate}
                       onChange={(date) => setSelectedDate(date)}
+                      required
                       placeholderText="Select a date"
                       name="returnDate"
-                      className="border w-full focus:outline-none focus:ring-1 focus:ring-accent px-4 mb-3 py-3 cursor-pointer placeholder-accent text-accent rounded-xl"
+                      className="border w-full focus:outline-none focus:ring-1 focus:ring-accent pl-4 mb-3 py-2 cursor-pointer placeholder-accent text-accent rounded-xl"
                     />
                   </div>
 
@@ -196,8 +231,9 @@ const BookDetails = () => {
                     type="text"
                     name="name"
                     defaultValue={user?.displayName}
+                    readOnly
                     required
-                    className="px-4 mb-3 py-3 rounded-xl w-full border border-accent bg-white text-accent placeholder-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                    className="pl-3 mb-3 py-2 rounded-xl w-full border border-accent bg-white text-accent placeholder-accent focus:outline-none focus:ring-1 focus:ring-accent"
                     placeholder="Your Full Name"
                   />
 
@@ -213,8 +249,9 @@ const BookDetails = () => {
                     name="email"
                     autoComplete="email"
                     defaultValue={user?.email}
+                    readOnly
                     required
-                    className="px-4 mb-3 py-3 rounded-xl w-full border border-accent bg-white text-accent placeholder-accent focus:outline-none focus:ring-1 focus:ring-accent"
+                    className="pl-3 mb-3 py-2 rounded-xl w-full border border-accent bg-white text-accent placeholder-accent focus:outline-none focus:ring-1 focus:ring-accent"
                     placeholder="Email address"
                   />
 
@@ -222,11 +259,7 @@ const BookDetails = () => {
                     type="submit"
                     className="w-full btn py-3 rounded-2xl border-none text-lg bg-accent  font-medium transition backdrop-blur-xl"
                   >
-                    {loading ? (
-                      <span className="loading loading-spinner text-accent"></span>
-                    ) : (
-                      "Borrow Book"
-                    )}
+                    Borrow Book
                   </button>
                 </form>
               </div>

@@ -21,7 +21,7 @@
   @apply relative rounded px-2 lg:px-3 py-1 lg:text-lg backdrop-blur-md transition-transform ease-out duration-150;
 }
 .nav-link.active {
-  @apply font-bold;
+  @apply text-accent font-bold;
 }
 
 .swiper-button-next::after,

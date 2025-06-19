@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import {
   FaBook,
   FaBookOpen,
@@ -10,20 +10,25 @@ import {
   FaUser,
 } from "react-icons/fa";
 import AuthContext from "../Contexts/AuthContext";
-import axios from "axios";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../Components/Hooks/UseAxiosSecure";
+import { useNavigate } from "react-router";
 
 const AddBook = () => {
-  const { user, loading } = use(AuthContext);
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(null);
+  const { user } = use(AuthContext);
   const { displayName, photoURL, email } = user;
 
   const categories = ["Novel", "Thriller", "History", "Drama", "Sci-Fi"];
 
-  const handleFormSubmit = (e) => {
+  const handleFormAddBook = (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
     const newBook = Object.fromEntries(formData.entries());
+    setLoading(true);
 
     const bookData = {
       displayName,
@@ -34,19 +39,21 @@ const AddBook = () => {
       rating: parseFloat(newBook.rating),
     };
 
-    axios
-      .post(
-        "https://library-management-system-server-two.vercel.app/books",
-        bookData
-      )
+    axiosSecure
+      .post("/books", bookData)
       .then((res) => {
         if (res.data.insertedId) {
           e.target.reset();
           toast.dismiss();
           toast.success("Book added Successfully!");
+          setLoading(false);
+          navigate(`/details/${res.data.insertedId}`);
         }
       })
       .catch((error) => {
+        setLoading(false);
+        toast.dismiss();
+        toast.error("Something went wrong");
         console.error(error);
       });
   };
@@ -55,7 +62,7 @@ const AddBook = () => {
     <section>
       <title>Add a New Book | LibraFlow</title>
       <form
-        onSubmit={handleFormSubmit}
+        onSubmit={handleFormAddBook}
         className="w-9/12 mx-auto py-5 flex flex-col gap-3 p-4"
       >
         <p className="w-10/12 mb-3 text-2xl font-semibold mx-auto text-center text-accent">
@@ -96,6 +103,8 @@ const AddBook = () => {
         <input
           type="number"
           name="quantity"
+          min={0}
+          max={10}
           required
           placeholder="Book Quantity"
           className="px-4 py-3 rounded-xl bg-white text-accent placeholder-accent focus:outline-none focus:ring-1 focus:ring-accent [&::-webkit-inner-spin-button]:hidden [&::-webkit-outer-spin-button]:hidden [appearance:textfield]"
@@ -121,7 +130,7 @@ const AddBook = () => {
         </label>
         <select
           name="category"
-          className="px-4 py-3 rounded-xl bg-white text-accent focus:outline-none focus:ring-1 focus:ring-accent"
+          className="px-4 py-3 cursor-pointer rounded-xl bg-white text-accent focus:outline-none focus:ring-1 focus:ring-accent"
         >
           {categories.map((type) => (
             <option key={type}>{type}</option>
@@ -144,13 +153,13 @@ const AddBook = () => {
         {/* Rating */}
 
         <label className="flex items-center gap-2 text-accent/70">
-          <FaStar size={24} /> Rating (mins)
+          <FaStar size={24} /> Rating
         </label>
         <input
           type="number"
           name="rating"
-          min="1"
-          max="5"
+          min={1}
+          max={5}
           placeholder="Rating (1-5)"
           required
           className="px-4 py-3 rounded-xl bg-white text-accent placeholder-accent focus:outline-none focus:ring-1 focus:ring-accent [&::-webkit-inner-spin-button]:hidden [&::-webkit-outer-spin-button]:hidden [appearance:textfield]"

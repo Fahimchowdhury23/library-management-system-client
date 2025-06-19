@@ -1,52 +1,60 @@
-import axios from "axios";
 import React from "react";
 import { FaRegStar, FaStar } from "react-icons/fa6";
 import Rating from "react-rating";
-import { Link } from "react-router";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../Components/Hooks/UseAxiosSecure";
+import { Link } from "react-router";
 
 const BorrowedBookCard = ({ setBorrowedBooks, borrowedBooks, book }) => {
+  const axiosSecure = useAxiosSecure();
   const [month, day, year] = book.returnDate.split("/");
 
   const returnDate = `${day}/${month}/${year}`;
+
   const handleSubmitReturn = () => {
     Swal.fire({
       title: "Are you sure?",
       text: "This action cannot be undone!",
       icon: "question",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#03a791",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, return it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
-          .delete(
-            `https://library-management-system-server-two.vercel.app/borrows/${book._id}`
-          )
-          .then((res) => {
-            console.log(res.data);
-            return axios.patch(
-              `https://library-management-system-server-two.vercel.app/return/${book._id}`
-            );
-          })
-          .then((res) => {
-            if (res.data.modifiedCount) {
-              const remainingBooks = borrowedBooks.filter(
-                (books) => books._id !== book._id
-              );
-              setBorrowedBooks(remainingBooks);
+        // returning the book
 
-              Swal.fire({
-                title: "Returned!",
-                text: "Your book has been successfully returned.",
-                icon: "success",
-              });
+        axiosSecure
+          .delete(`/borrows/${book._id}`)
+          .then((res) => {
+            if (res.data.deletedCount) {
+              // book quantity increasing
+
+              axiosSecure
+                .patch(`/return/${book._id}`)
+                .then((res) => {
+                  if (res.data.modifiedCount) {
+                    const remainingBooks = borrowedBooks.filter(
+                      (books) => books._id !== book._id
+                    );
+                    setBorrowedBooks(remainingBooks);
+
+                    Swal.fire({
+                      title: "Returned!",
+                      text: `${book.title} has been successfully returned.`,
+                      icon: "success",
+                    });
+                  }
+                })
+                .catch((error) => {
+                  console.error("Error returning book:", error);
+                  Swal.fire("Something went wrong");
+                });
             }
           })
           .catch((error) => {
             console.error("Error returning book:", error);
-            Swal.fire("Error", "Something went wrong.", "error");
+            Swal.fire("Something went wrong while returning the book.");
           });
       }
     });
@@ -54,11 +62,14 @@ const BorrowedBookCard = ({ setBorrowedBooks, borrowedBooks, book }) => {
 
   return (
     <div className="bg-white rounded-2xl p-3 shadow-md overflow-hidden flex flex-col">
-      <img
-        src={book.image}
-        alt={book.title}
-        className="h-60 w-full rounded-2xl object-cover"
-      />
+      <Link to={`/details/${book._id}`}>
+        <img
+          src={book.image}
+          alt={book.title}
+          className="h-60 cursor-pointer w-full rounded-2xl object-cover"
+        />
+      </Link>
+
       <div className="p-2 space-y-2 flex-1">
         <h2 className="text-xl font-semibold">
           Title:&nbsp;
@@ -100,7 +111,7 @@ const BorrowedBookCard = ({ setBorrowedBooks, borrowedBooks, book }) => {
 
         <button
           onClick={handleSubmitReturn}
-          className="btn w-full rounded-xl font-semibold text-lg bg-red-400 "
+          className="btn text-white w-full rounded-xl font-semibold text-lg bg-red-500 "
         >
           Return This Book
         </button>

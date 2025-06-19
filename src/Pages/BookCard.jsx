@@ -1,16 +1,20 @@
 import React from "react";
 import { FaRegStar, FaStar } from "react-icons/fa6";
+import { MdOutlineBrowserUpdated } from "react-icons/md";
 import Rating from "react-rating";
 import { Link } from "react-router";
 
 const BookCard = ({ book }) => {
   return (
     <div className="bg-white rounded-2xl p-3 shadow-md overflow-hidden flex flex-col">
-      <img
-        src={book.image}
-        alt={book.title}
-        className="h-60 w-full rounded-2xl object-cover"
-      />
+      <Link to={`/details/${book._id}`}>
+        <img
+          src={book.image}
+          alt={book.title}
+          className="h-60 w-full rounded-2xl object-cover"
+        />
+      </Link>
+
       <div className="p-2 space-y-2 flex-1">
         <h2 className="text-xl font-semibold">
           Title:&nbsp;
@@ -57,7 +61,7 @@ const BookCard = ({ book }) => {
 
         <Link to={`/books/${book._id}`}>
           <button className="btn w-full rounded-xl font-semibold text-lg bg-accent">
-            Update
+            <MdOutlineBrowserUpdated size={24} /> Update Book
           </button>
         </Link>
       </div>
