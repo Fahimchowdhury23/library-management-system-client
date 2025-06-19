@@ -3,7 +3,7 @@ import React, { use } from "react";
 import AuthContext from "../../Contexts/AuthContext";
 
 const axiosInstance = axios.create({
-  baseURL: "https://library-management-system-server-kgsopxubu.vercel.app/",
+  baseURL: "https://library-management-system-server-two.vercel.app/",
 });
 
 const useAxiosSecure = () => {
