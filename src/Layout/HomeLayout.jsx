@@ -12,7 +12,7 @@ const HomeLayout = () => {
       <header>
         <Navbar></Navbar>
       </header>
-      <main className="w-11/12 mx-auto">
+      <main className="w-11/12 mx-auto min-h-screen">
         <ScrollToTop></ScrollToTop>
         {state === "loading" ? <Spinner></Spinner> : <Outlet></Outlet>}
       </main>

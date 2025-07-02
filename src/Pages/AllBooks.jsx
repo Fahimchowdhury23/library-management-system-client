@@ -58,7 +58,7 @@ const AllBooks = () => {
       {/* Dropdown for view mode */}
       <div className="w-40 mx-auto mb-6">
         <select
-          className="select font-semibold text-accent select-bordered w-full"
+          className="select cursor-pointer font-semibold text-accent select-bordered w-full"
           value={viewMode}
           onChange={(e) => setViewMode(e.target.value)}
         >

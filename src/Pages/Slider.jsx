@@ -21,7 +21,7 @@ const images = [
 
 const Slider = () => {
   return (
-    <div className="w-full py-8 mx-auto h-[80vh]">
+    <div className="w-full py-5 mx-auto h-[40vh] md:h-[30vh] lg:h-[60vh]">
       <Swiper
         loop={true}
         effect="coverflow"
@@ -45,7 +45,7 @@ const Slider = () => {
           <SwiperSlide className="flex justify-center items-center" key={index}>
             <img
               src={src}
-              className="w-full object-cover max-h-[80vh]"
+              className="w-full object-cover h-[40vh] md:h-[30vh] lg:h-[60vh]"
               alt={`Slide ${index + 1}`}
             />
           </SwiperSlide>
