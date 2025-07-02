@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router";
-import animationData from "../../Reading-book-animation.json";
-import Lottie from "lottie-react";
 
 const BookCategory = () => {
   const categories = ["Novel", "Thriller", "Sci-Fi", "Drama", "History"];
@@ -26,13 +24,6 @@ const BookCategory = () => {
       <p className="text-center text-2xl font-bold text-accent drop-shadow mb-4">
         Hop In — Choose the Genre That Sparks Your Curiosity!
       </p>
-
-      <div
-        className="m-auto cursor-pointer"
-        style={{ width: 400, height: 400 }}
-      >
-        <Lottie animationData={animationData} loop={true} autoplay={true} />
-      </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 pt-4 pb-10 w-10/12 mx-auto">
         {categories.map((category, idx) => (
