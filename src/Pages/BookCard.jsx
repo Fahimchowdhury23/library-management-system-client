@@ -6,16 +6,16 @@ import { Link } from "react-router";
 
 const BookCard = ({ book }) => {
   return (
-    <div className="bg-white hover:shadow-2xl transition-all duration-300 ease-out rounded-xl overflow-hidden flex flex-col">
+    <div className="bg-white hover:shadow-2xl shadow-md transition-all duration-300 ease-out rounded-xl overflow-hidden flex flex-col">
       <Link to={`/details/${book._id}`}>
         <img
           src={book.image}
           alt={book.title}
-          className="h-50 lg:h-60 w-full hover:scale-105 transition-all duration-500 ease-out object-cover object-top mb-1"
+          className="h-50 lg:h-60 w-full hover:scale-105 transition-all duration-500 ease-out object-cover object-top"
         />
       </Link>
 
-      <div className="px-2 text-black space-y-1 flex-1">
+      <div className="px-2 mt-1 text-black space-y-1 flex-1">
         <h2 className="text-lg font-bold">
           Title:&nbsp;
           <span className="font-semibold text-accent">{book.title}</span>

@@ -16,66 +16,70 @@ const CategoryCard = () => {
         {categoryReal} Books
       </h1>
 
-      <p className="border-b-3 w-1/2 md:w-1/3 lg:w-1/5 mx-auto border-accent/70 mb-3"></p>
+      <p className="border-b-3 w-1/2 md:w-1/3 lg:w-1/5 mx-auto border-accent/70 mb-3 md:mb-5"></p>
+
+      {/* If there is no books */}
 
       {!books && (
-        <h2 className="text-center text-2xl font-semibold min-h-screen pt-40 text-accent drop-shadow">
+        <h2 className="text-center flex flex-wrap justify-center text-xl md:text-2xl font-semibold min-h-screen pt-40 text-accent drop-shadow">
           There is no {categoryReal} book added yet! <br />
           Sorry for the inconvenience.
         </h2>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-6 w-full">
         {books.map((book) => (
           <div
             key={book._id}
-            className="bg-white rounded-2xl p-3 shadow-md overflow-hidden flex flex-col"
+            className="bg-white rounded-xl hover:shadow-2xl shadow-md transition-all duration-300 ease-out overflow-hidden flex flex-col"
           >
             <Link to={`/details/${book._id}`}>
               <img
                 src={book.image}
                 alt={book.title}
-                className="h-60 w-full rounded-2xl object-cover"
+                className="h-55 lg:h-70 w-full hover:scale-105 transition-all duration-500 ease-out object-cover object-top mb-1"
               />
             </Link>
 
-            <div className="p-2 space-y-2 flex-1">
-              <h2 className="text-xl font-semibold">
+            <div className="px-2 mt-1 text-black space-y-1 flex-1">
+              <h2 className="text-lg font-bold">
                 Title:&nbsp;
-                <span className=" font-semibold text-accent ">
-                  {book.title}
-                </span>
+                <span className="font-semibold text-accent ">{book.title}</span>
               </h2>
 
-              <h3 className="text-lg font-semibold">
+              <h3 className="font-semibold">
                 Author: &nbsp;
-                <span className=" font-semibold text-accent ">
-                  {book.author}
-                </span>
+                <span className="text-accent">{book.author}</span>
               </h3>
 
-              <p className="text-md">Category: {book.category}</p>
+              <p>
+                Category:{" "}
+                <span className="font-semibold text-accent">
+                  {book.category}
+                </span>
+              </p>
 
-              <p className="text-md ">
+              <p>
                 Quantity:
-                <span className=" font-semibold text-green-600">
+                <span className="font-semibold text-accent">
                   {book.quantity}
                 </span>
               </p>
             </div>
-            <div>
-              <div className="flex items-center gap-2 mt-4">
+
+            <div className="p-2">
+              <div className="flex items-center gap-2">
                 <img
                   src={book.photoURL}
                   alt={book.displayName}
                   className="w-10 h-10 rounded-full"
                 />
                 <span className="text-lg font-medium text-accent">
-                  Added By {book.displayName}
+                  {book.displayName}
                 </span>
               </div>
               <div className="flex items-center gap-1 mt-2 mb-3">
-                <p className=" font-semibold">Rating:</p>
+                <p className="text-black font-semibold">Rating:</p>
                 <p>
                   <Rating
                     initialRating={book.rating}
@@ -85,13 +89,13 @@ const CategoryCard = () => {
                   />
                 </p>
               </div>
-            </div>
 
-            <Link to={`/details/${book._id}`}>
-              <button className="btn w-full rounded-xl font-semibold text-lg bg-accent">
-                View Details
-              </button>
-            </Link>
+              <Link to={`/details/${book._id}`}>
+                <button className="btn w-full rounded-xl text-black border-0 font-semibold text-lg bg-accent/70 hover:bg-accent">
+                  View Details
+                </button>
+              </Link>
+            </div>
           </div>
         ))}
       </div>

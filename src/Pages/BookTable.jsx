@@ -15,7 +15,11 @@ const BookTable = ({ book, index }) => {
       <td>
         <div className="avatar">
           <div className="mask mask-squircle w-20 h-20">
-            <img src={book.image} alt={book.title} />
+            <img
+              className="hover:scale-105 transition-all duration-300 ease-in-out"
+              src={book.image}
+              alt={book.title}
+            />
           </div>
         </div>
       </td>
