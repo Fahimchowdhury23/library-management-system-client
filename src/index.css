@@ -18,10 +18,10 @@
 }
 
 .nav-link {
-  @apply relative rounded px-2 lg:px-3 py-1 lg:text-lg backdrop-blur-md transition-transform ease-out duration-150;
+  @apply relative rounded px-2 lg:px-3 py-1 backdrop-blur-md transition-transform ease-out duration-150;
 }
 .nav-link.active {
-  @apply text-accent font-bold;
+  @apply text-accent bg-primary md:bg-transparent font-bold;
 }
 
 .swiper-button-next::after,

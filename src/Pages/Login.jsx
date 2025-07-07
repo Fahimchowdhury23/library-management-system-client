@@ -87,7 +87,7 @@ const Login = () => {
         toast.success(
           `Welcome, ${result?.user?.displayName}! You're logged in.`,
           {
-            duration: 3000,
+            duration: 1000,
             className: "text-center",
           }
         );

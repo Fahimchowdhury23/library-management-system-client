@@ -1,12 +1,15 @@
-import React, { use, useEffect, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import AuthContext from "../../Contexts/AuthContext";
 import toast from "react-hot-toast";
+import { HiMenuAlt1 } from "react-icons/hi";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, signOutUser } = use(AuthContext);
   const navigate = useNavigate();
   const [theme, setTheme] = useState("light");
+  const menuRef = useRef(null);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -22,37 +25,115 @@ const Navbar = () => {
   };
 
   const handleSignOut = () => {
-    signOutUser()
-      .then(() => {
-        toast.dismiss();
-        toast.success("You've logged out successfully!", {
-          className: "text-center",
-        });
-        navigate("/auth/login");
-      })
-      .catch((error) => {
-        toast.dismiss();
-        toast.error("Something went wrong", error?.message);
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#03a791",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, logout",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Signing Out
+
+        signOutUser()
+          .then(() => {
+            toast.dismiss();
+            toast.success("You've logged out successfully!", {
+              className: "text-center",
+            });
+            navigate("/auth/login");
+          })
+          .catch((error) => {
+            toast.dismiss();
+            toast.error("Something went wrong", error?.message);
+          });
+      }
+    });
   };
 
   return (
-    <div className="navbar shadow-sm">
-      <div className="flex items-center justify-between mx-10 flex-1">
-        <div className="flex items-center">
+    <div className="navbar bg-primary fixed top-0 z-50 shadow-md">
+      <div className="flex items-center justify-between md:justify-around flex-1">
+        <div className="dropdown dropdown-start md:hidden">
+          <div
+            ref={menuRef}
+            tabIndex={0}
+            role="button"
+            className="btn border-0 px-3 btn-accent"
+          >
+            <HiMenuAlt1 size={20} />
+          </div>
+
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu bg-neutral rounded-box z-1 w-46 p-2 shadow-sm"
+          >
+            <div className="flex flex-col whitespace-nowrap font-medium lg:gap-2">
+              <NavLink
+                onClick={() => {
+                  menuRef.current?.focus();
+                  menuRef.current?.blur();
+                }}
+                className="nav-link hover:bg-primary"
+                to="/"
+              >
+                Home
+              </NavLink>
+              <NavLink
+                onClick={() => {
+                  menuRef.current?.focus();
+                  menuRef.current?.blur();
+                }}
+                className="nav-link hover:bg-primary"
+                to="/allBooks"
+              >
+                All Books
+              </NavLink>
+
+              <NavLink
+                onClick={() => {
+                  menuRef.current?.focus();
+                  menuRef.current?.blur();
+                }}
+                className="nav-link hover:bg-primary"
+                to="/addBook"
+              >
+                Add Book
+              </NavLink>
+              <NavLink
+                onClick={() => {
+                  menuRef.current?.focus();
+                  menuRef.current?.blur();
+                }}
+                className="nav-link hover:bg-primary"
+                to="/borrowedBooks"
+              >
+                Borrowed Books
+              </NavLink>
+            </div>
+          </ul>
+        </div>
+
+        <div className="flex items-center gap-1">
           <Link to="/">
             <img
-              className="w-12 h-12"
+              className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 cursor-pointer"
               src="https://i.ibb.co/V021hN4z/logo.png"
               alt="LibraFlow Logo"
             />
           </Link>
           <Link to="/">
-            <h1 className="font-semibold text-2xl cursor-pointer">LibraFlow</h1>
+            <h1 className="font-semibold text-lg md:text-2xl lg:text-3xl cursor-pointer text-accent">
+              LibraFlow
+            </h1>
           </Link>
         </div>
 
-        <div className="flex text-xl font-medium items-center gap-2">
+        {/* For Large Devices */}
+
+        <div className="hidden md:grid grid-flow-col gap-0 whitespace-nowrap lg:text-xl text-accent font-medium">
           <NavLink className="nav-link" to="/">
             Home
           </NavLink>
@@ -67,9 +148,9 @@ const Navbar = () => {
           </NavLink>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 lg:gap-2">
           <button
-            className="cursor-pointer hover:bg-neutral/60 rounded-full p-1"
+            className="cursor-pointer hover:bg-neutral/60 rounded-full p-0.5 md:p-1"
             onClick={toggleTheme}
           >
             {theme === "dark" ? (
@@ -77,7 +158,7 @@ const Navbar = () => {
                 {/* sun icon */}
 
                 <svg
-                  className="swap-on text-accent h-10 w-10 fill-current transition-transform duration-500 transform rotate-180"
+                  className="swap-on text-accent w-8 h-8 md:w-10 md:h-10 fill-current transition-all duration-500 transform rotate-180"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                 >
@@ -89,7 +170,7 @@ const Navbar = () => {
                 {/* moon icon */}
 
                 <svg
-                  className="swap-off text-accent h-10 w-10 fill-current transition-all duration-500 transform"
+                  className="swap-off text-accent w-8 h-8 md:w-10 md:h-10 fill-current transition-all duration-500 transform"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                 >
@@ -101,11 +182,11 @@ const Navbar = () => {
 
           {user ? (
             <div className="dropdown dropdown-end">
-              <div className="p-1 hover:bg-neutral rounded-full">
+              <div className="p-1 md:p-1.25 hover:bg-neutral rounded-full">
                 <div
                   tabIndex={0}
                   role="button"
-                  className="btn btn-ghost btn-circle avatar"
+                  className="btn btn-ghost btn-circle avatar avatar-online"
                 >
                   <div className="w-10 rounded-full">
                     <img alt={user?.displayName} src={user?.photoURL} />
@@ -114,20 +195,28 @@ const Navbar = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="menu dropdown-content font-medium bg-gradient-to-l from-accent to-neutral rounded-box z-1 mt-3 w-52 p-2 shadow"
+                className="menu dropdown-content font-medium md:text-lg bg-gradient-to-l from-accent to-neutral rounded-box z-1 mt-3 w-52 p-2 shadow"
               >
                 <li>
-                  <a onClick={() => navigate("/borrowedBooks")}>
+                  <a
+                    className="hover:bg-primary hover:text-accent cursor-pointer focus:!outline-none active:!bg-primary"
+                    onClick={() => navigate("/borrowedBooks")}
+                  >
                     {user?.displayName}
                   </a>
                 </li>
                 <li>
-                  <a onClick={handleSignOut}>Logout</a>
+                  <a
+                    className="hover:bg-primary hover:text-accent cursor-pointer focus:!outline-none active:!bg-primary"
+                    onClick={handleSignOut}
+                  >
+                    Logout
+                  </a>
                 </li>
               </ul>
             </div>
           ) : (
-            <div className="flex gap-2 text-lg font-medium">
+            <div className="flex gap-2">
               <Link to="/auth/login">
                 <button className="lg:text-lg btn bg-gradient-to-l from-neutral to-accent rounded-full p-3 lg:p-5 border-none font-semibold">
                   Login
@@ -135,7 +224,7 @@ const Navbar = () => {
               </Link>
 
               <Link to="/auth/register">
-                <button className="lg:text-lg btn bg-gradient-to-l from-neutral to-accent rounded-full p-3 lg:p-5 border-none font-semibold">
+                <button className="hidden md:flex lg:text-lg btn bg-gradient-to-l from-neutral to-accent rounded-full p-3 lg:p-5 border-none font-semibold">
                   Register
                 </button>
               </Link>

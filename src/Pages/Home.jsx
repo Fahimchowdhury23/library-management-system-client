@@ -15,16 +15,16 @@ const Home = () => {
         style={{
           scaleX: scrollYProgress,
           position: "fixed",
-          top: 0,
+          top: 64,
           left: 0,
           right: 0,
-          height: 8,
+          height: 6,
           originX: 0,
           background: "linear-gradient(to right, #00f6ff, #03a791, #00f6ff)",
           borderRadius: "0 8px 8px 0",
           boxShadow: "0 0 10px #03a79188",
           pointerEvents: "none",
-          zIndex: 10,
+          zIndex: 50,
         }}
       />
 
@@ -32,7 +32,7 @@ const Home = () => {
         animate={{ rotateY: [0, 180, 0] }}
         transition={{ duration: 1 }}
         viewport={{ once: false }}
-        className="bg-gradient-to-r from-accent to-neutral bg-clip-text  text-transparent text-2xl lg:text-3xl pt-4 font-bold text-center"
+        className="bg-gradient-to-r from-accent to-neutral bg-clip-text text-transparent md:text-2xl lg:text-3xl py-3 md:py-4 font-bold text-center"
       >
         Empowering Minds, One Page at a Time
       </motion.h1>

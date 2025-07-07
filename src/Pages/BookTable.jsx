@@ -25,7 +25,8 @@ const BookTable = ({ book, index }) => {
       <td>{book.category}</td>
       <td>{book.quantity}</td>
       <td>{book.rating}</td>
-      <td className="cursor-auto">
+
+      <td onClick={(e) => e.stopPropagation()}>
         <div className="flex justify-center items-center">
           <Link to={`/books/${book._id}`}>
             <button className="cursor-pointer">

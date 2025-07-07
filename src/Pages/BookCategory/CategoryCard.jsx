@@ -10,13 +10,13 @@ const CategoryCard = () => {
   const categoryReal = category.charAt(0).toUpperCase() + category.slice(1);
 
   return (
-    <div className="w-11/12 mx-auto py-12">
+    <div className="pt-2 md:pt-4 min-h-screen">
       <title>Category Books | LibraFlow</title>
-      <h1 className="text-2xl font-bold text-center text-accent mb-2">
+      <h1 className="text-xl md:text-2xl font-bold text-center text-accent mb-1">
         {categoryReal} Books
       </h1>
 
-      <p className="border-b-3 w-1/5 mx-auto border-accent/70 mb-3"></p>
+      <p className="border-b-3 w-1/2 md:w-1/3 lg:w-1/5 mx-auto border-accent/70 mb-3"></p>
 
       {!books && (
         <h2 className="text-center text-2xl font-semibold min-h-screen pt-40 text-accent drop-shadow">
@@ -25,7 +25,7 @@ const CategoryCard = () => {
         </h2>
       )}
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {books.map((book) => (
           <div
             key={book._id}

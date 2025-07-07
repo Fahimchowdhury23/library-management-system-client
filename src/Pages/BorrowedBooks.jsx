@@ -16,24 +16,24 @@ const BorrowedBooks = () => {
   }, [user, axiosSecure]);
 
   return (
-    <section>
+    <section className="min-h-screen">
       <title>My Borrowed Books | LibraFlow</title>
-      <div className="py-8">
-        <p className="w-10/12 mb-3 text-3xl font-semibold mx-auto text-center text-accent">
+      <div>
+        <p className="mb-1 pt-2 md:pt-3 lg:pt-5 text-xl md:text-2xl lg:text-3xl font-semibold text-center text-accent">
           My Borrowed Books
         </p>
-        <p className="border-b-3 w-3/8 mx-auto border-accent/70"></p>
+        <p className="border-b-3 w-2/3 md:w-1/3 mx-auto border-accent/70"></p>
       </div>
 
       {borrowedBooks.length === 0 ? (
         <div className="mt-28 min-h-screen">
-          <p className="w-10/12 mb-3 text-3xl font-semibold mx-auto text-center text-accent">
+          <p className="mb-3 text-xl md:text-2xl lg:text-3xl font-semibold text-center text-accent">
             You haven't borrowed any book yet !
           </p>
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 pt-4 pb-10 w-10/12 mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-3 md:py-4 lg:py-6 w-full  lg:w-11/12 mx-auto">
             {borrowedBooks.map((book) => (
               <BorrowedBookCard
                 key={book._id}

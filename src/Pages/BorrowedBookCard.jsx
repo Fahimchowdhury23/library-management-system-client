@@ -61,26 +61,26 @@ const BorrowedBookCard = ({ setBorrowedBooks, borrowedBooks, book }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-3 shadow-md overflow-hidden flex flex-col">
+    <div className="bg-white hover:shadow-2xl transition-all duration-300 ease-out rounded-xl overflow-hidden flex flex-col">
       <Link to={`/details/${book._id}`}>
         <img
           src={book.image}
           alt={book.title}
-          className="h-60 cursor-pointer w-full rounded-2xl object-cover"
+          className="h-60 lg:h-70 hover:scale-105 transition-all duration-500 ease-out w-full object-top object-cover mb-1"
         />
       </Link>
 
-      <div className="p-2 space-y-2 flex-1">
-        <h2 className="text-xl font-semibold">
+      <div className="px-2 text-black space-y-2 flex-1">
+        <h2 className="text-lg font-bold">
           Title:&nbsp;
-          <span className=" font-semibold text-accent ">{book.title}</span>
+          <span className="font-semibold text-accent">{book.title}</span>
         </h2>
-        <h3 className="text-lg font-semibold">
+        <h3 className="font-semibold">
           Author: &nbsp;
-          <span className=" font-semibold text-accent ">{book.author}</span>
+          <span className="text-accent">{book.author}</span>
         </h3>
 
-        <div className="text-md font-medium flex flex-col gap-2">
+        <div className="font-medium flex flex-col gap-2">
           <p>
             Category: <strong className="text-accent">{book.category}</strong>
           </p>
@@ -96,9 +96,9 @@ const BorrowedBookCard = ({ setBorrowedBooks, borrowedBooks, book }) => {
         </div>
       </div>
 
-      <div>
-        <div className="flex items-center pl-2 gap-1 mt-2 mb-3">
-          <p className=" font-semibold">Rating:</p>
+      <div className="p-2">
+        <div className="flex items-center gap-1 mb-2">
+          <p className="text-black font-medium">Rating:</p>
           <p>
             <Rating
               initialRating={book.rating}
@@ -111,7 +111,7 @@ const BorrowedBookCard = ({ setBorrowedBooks, borrowedBooks, book }) => {
 
         <button
           onClick={handleSubmitReturn}
-          className="btn text-white w-full rounded-xl font-semibold text-lg bg-red-500 "
+          className="btn text-white w-full rounded-lg font-semibold border-0 text-lg bg-red-500 hover:bg-red-600"
         >
           Return This Book
         </button>

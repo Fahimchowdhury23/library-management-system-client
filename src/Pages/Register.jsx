@@ -62,7 +62,7 @@ const Register = () => {
             toast.success(
               `Woohoo! ${result?.user?.displayName}, you're officially in. Let's have some fun!.`,
               {
-                duration: 3000,
+                duration: 1000,
                 className: "text-center",
               }
             );

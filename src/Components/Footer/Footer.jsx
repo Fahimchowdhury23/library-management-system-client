@@ -1,77 +1,73 @@
 import React from "react";
-import { FaDiscord, FaFacebook, FaGithub, FaYoutube } from "react-icons/fa";
-import { Link } from "react-router";
+import { FaDiscord, FaGithub, FaYoutube, FaLinkedin } from "react-icons/fa";
+
+import { Link, NavLink } from "react-router";
 
 const Footer = () => {
   return (
-    <footer className="footer footer-horizontal footer-center bg-gradient-to-b from-neutral to-primary rounded p-8">
+    <footer className="footer footer-horizontal footer-center bg-gradient-to-b from-neutral to-primary rounded gap-3 lg:gap-4 footer-center p-3 md:p-4 lg:p-8">
       <div className="flex items-center gap-1">
         <Link to="/">
           <img
-            className="w-12 h-12"
+            className="w-10 h-10"
             src="https://i.ibb.co/V021hN4z/logo.png"
             alt="LibraFlow Logo"
           />
         </Link>
         <Link to="/">
-          <h1 className="text-3xl font-bold cursor-pointer">LibraFlow</h1>
+          <h1 className="text-2xl md:text-3xl font-bold cursor-pointer">
+            LibraFlow
+          </h1>
         </Link>
       </div>
-      <nav className="grid grid-flow-col text-xl font-medium gap-4">
-        <a className="link link-hover">About us</a>
-        <a className="link link-hover">Contact</a>
-        <a className="link link-hover">Jobs</a>
-        <a className="link link-hover">Press kit</a>
+
+      <nav className="grid grid-flow-col gap-0 whitespace-nowrap md:text-lg text-accent font-medium">
+        <NavLink className="nav-link" to="/">
+          Home
+        </NavLink>
+        <NavLink className="nav-link" to="/allBooks">
+          All Books
+        </NavLink>
+        <NavLink className="nav-link" to="/addBook">
+          Add Book
+        </NavLink>
+        <NavLink className="nav-link" to="/borrowedBooks">
+          Borrowed Books
+        </NavLink>
       </nav>
+
       <nav>
-        <div className="flex gap-5">
+        <div className="flex gap-4">
           <a
             href="https://github.com/Fahimchowdhury23"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <FaGithub
-              className="cursor-pointer hover:text-[rgb(80,80,80)]"
-              size={30}
-            />
+            <FaGithub className="cursor-pointer text-2xl md:text-3xl hover:text-[rgb(80,80,80)]" />
           </a>
-          <a
-            href="https://discord.com/users/879041544181649500"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <FaDiscord
-              className="cursor-pointer hover:text-[rgb(88,101,242)]"
-              size={30}
-            />
-          </a>
+
           <a
             href="https://www.facebook.com/fahimchowdhury23/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <FaFacebook
-              className="cursor-pointer hover:text-blue-600"
-              size={30}
-            />
+            <FaLinkedin className="cursor-pointer text-2xl md:text-3xl hover:text-blue-700" />
           </a>
+
           <a
-            href="https://www.youtube.com"
+            href="https://discord.com/users/879041544181649500"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <FaYoutube
-              className="cursor-pointer hover:text-red-600"
-              size={30}
-            />
+            <FaDiscord className="cursor-pointer text-2xl md:text-3xl hover:text-[rgb(88,101,242)]" />
           </a>
         </div>
       </nav>
 
       <aside>
-        <p className="text-lg">
-          Copyright © {new Date().getFullYear()} - All right reserved by
-          LibraFlow Inc.
+        <p className="md:text-lg text-accent pb-3 lg:pb-0">
+          Copyright © {new Date().getFullYear()} - LibraFlow | All rights
+          reserved
         </p>
       </aside>
     </footer>

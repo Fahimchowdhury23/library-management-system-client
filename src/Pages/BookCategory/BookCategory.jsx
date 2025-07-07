@@ -16,25 +16,35 @@ const BookCategory = () => {
 
   return (
     <section>
-      <h2 className="text-center pt-20 text-3xl font-bold text-accent drop-shadow mb-2">
-        Book Categories
-      </h2>
-      <p className="border-b-3 w-1/3 mx-auto border-accent/70 mb-4"></p>
+      <div className="pt-4 md:pt-6 lg:pt-8">
+        <h2 className="text-center text-lg md:text-2xl lg:text-3xl font-bold text-accent drop-shadow mb-1">
+          Book Categories
+        </h2>
+        <p className="border-b-3 w-1/2 md:w-1/3 lg:w-1/4 mx-auto border-accent/70 mb-1"></p>
+      </div>
 
-      <p className="text-center text-2xl font-bold text-accent drop-shadow mb-4">
+      <p className="flex justify-center flex-wrap text-xs whitespace-nowrap md:text-xl lg:text-2xl font-bold text-accent drop-shadow mb-4">
         Hop In — Choose the Genre That Sparks Your Curiosity!
       </p>
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 pt-4 pb-10 w-10/12 mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 w-full">
         {categories.map((category, idx) => (
-          <Link to={`/category/${category.toLowerCase()}`} key={idx}>
-            <div className="bg-gradient-to-r from-accent to-neutral p-4 rounded-lg">
-              <h3 className="font-bold text-xl">{category}</h3>
-              <p className="pt-3">
-                {descriptions[category] ||
-                  `Explore our best ${category} collections.`}
-              </p>
-            </div>
+          <Link
+            className="h-full"
+            to={`/category/${category.toLowerCase()}`}
+            key={idx}
+          >
+            <section className="bg-gradient-to-r from-accent to-neutral p-4 flex flex-col rounded-lg">
+              <div>
+                <h3 className="font-bold text-xl pb-2">{category}</h3>
+              </div>
+              <div className="flex-1 flex flex-col">
+                <p>
+                  {descriptions[category] ||
+                    `Explore our best ${category} collections.`}
+                </p>
+              </div>
+            </section>
           </Link>
         ))}
       </div>

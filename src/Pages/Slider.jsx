@@ -21,7 +21,7 @@ const images = [
 
 const Slider = () => {
   return (
-    <div className="w-full py-5 mx-auto h-[40vh] md:h-[30vh] lg:h-[65vh]">
+    <div className="w-full py-2 md:py-3 mx-auto h-[40vh] md:h-[35vh] lg:h-[60vh]">
       <Swiper
         loop={true}
         effect="coverflow"
@@ -38,14 +38,14 @@ const Slider = () => {
         }}
         pagination={{ clickable: true }}
         navigation={true}
-        autoplay={{ delay: 2000, disableOnInteraction: false }}
-        className="mySwiper rounded-2xl"
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        className="mySwiper rounded-lg"
       >
         {images.map((src, index) => (
           <SwiperSlide className="flex justify-center items-center" key={index}>
             <img
               src={src}
-              className="w-full object-cover h-[40vh] md:h-[30vh] lg:h-[65vh]"
+              className="w-full object-cover h-[40vh] md:h-[35vh] lg:h-[60vh]"
               alt={`Slide ${index + 1}`}
             />
           </SwiperSlide>
