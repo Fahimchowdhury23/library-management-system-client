@@ -17,11 +17,21 @@
   --color-neutral: #81e7af;
 }
 
+@plugin "daisyui/theme" {
+  name: "dark";
+  default: true;
+
+  --color-primary: #36454f;
+  --color-secondary: #ebd5c2;
+  --color-accent: #03a791;
+  --color-neutral: #81e7af;
+}
+
 .nav-link {
   @apply relative rounded px-2 lg:px-3 py-1 backdrop-blur-md transition-transform ease-out duration-150;
 }
 .nav-link.active {
-  @apply text-accent bg-primary md:bg-transparent font-bold;
+  @apply text-accent font-bold;
 }
 
 .swiper-button-next::after,

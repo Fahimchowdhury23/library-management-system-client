@@ -68,7 +68,7 @@ const Navbar = () => {
 
           <ul
             tabIndex={0}
-            className="dropdown-content menu bg-neutral rounded-box z-1 w-46 p-2 shadow-sm"
+            className="dropdown-content menu bg-gradient-to-b from-primary to-neutral rounded-box z-1 w-46 p-2 shadow-sm"
           >
             <div className="flex flex-col whitespace-nowrap font-medium lg:gap-2">
               <NavLink
@@ -76,7 +76,7 @@ const Navbar = () => {
                   menuRef.current?.focus();
                   menuRef.current?.blur();
                 }}
-                className="nav-link hover:bg-primary"
+                className="nav-link hover:bg-neutral"
                 to="/"
               >
                 Home
@@ -86,7 +86,7 @@ const Navbar = () => {
                   menuRef.current?.focus();
                   menuRef.current?.blur();
                 }}
-                className="nav-link hover:bg-primary"
+                className="nav-link hover:bg-neutral"
                 to="/allBooks"
               >
                 All Books
@@ -97,7 +97,7 @@ const Navbar = () => {
                   menuRef.current?.focus();
                   menuRef.current?.blur();
                 }}
-                className="nav-link hover:bg-primary"
+                className="nav-link hover:bg-neutral"
                 to="/addBook"
               >
                 Add Book
@@ -107,7 +107,7 @@ const Navbar = () => {
                   menuRef.current?.focus();
                   menuRef.current?.blur();
                 }}
-                className="nav-link hover:bg-primary"
+                className="nav-link hover:bg-neutral"
                 to="/borrowedBooks"
               >
                 Borrowed Books
@@ -185,6 +185,7 @@ const Navbar = () => {
               <div className="p-1 md:p-1.25 hover:bg-neutral rounded-full">
                 <div
                   tabIndex={0}
+                  ref={menuRef}
                   role="button"
                   className="btn btn-ghost btn-circle avatar avatar-online"
                 >
@@ -195,19 +196,23 @@ const Navbar = () => {
               </div>
               <ul
                 tabIndex={0}
-                className="menu dropdown-content font-medium md:text-lg bg-gradient-to-l from-accent to-neutral rounded-box z-1 mt-3 w-52 p-2 shadow"
+                className="menu dropdown-content font-medium md:text-lg bg-gradient-to-t from-primary via-neutral to-accent rounded-box z-1 mt-2 w-52 p-2 shadow"
               >
                 <li>
                   <a
-                    className="hover:bg-primary hover:text-accent cursor-pointer focus:!outline-none active:!bg-primary"
-                    onClick={() => navigate("/borrowedBooks")}
+                    className="hover:bg-primary hover:text-accent active:!text-accent cursor-pointer focus:!outline-none active:!bg-primary"
+                    onClick={() => {
+                      menuRef.current?.focus();
+                      menuRef.current?.blur();
+                      navigate("/borrowedBooks");
+                    }}
                   >
                     {user?.displayName}
                   </a>
                 </li>
                 <li>
                   <a
-                    className="hover:bg-primary hover:text-accent cursor-pointer focus:!outline-none active:!bg-primary"
+                    className="hover:bg-primary hover:text-accent active:!text-accent cursor-pointer focus:!outline-none active:!bg-primary"
                     onClick={handleSignOut}
                   >
                     Logout

@@ -17,7 +17,7 @@ const BookCategory = () => {
   return (
     <section>
       <div className="pt-4 md:pt-6 lg:pt-8">
-        <h2 className="text-center text-lg md:text-2xl lg:text-3xl font-bold text-accent drop-shadow mb-1">
+        <h2 className="text-center text-lg md:text-2xl lg:text-3xl font-bold text-accent drop-shadow md:mb-1">
           Book Categories
         </h2>
         <p className="border-b-3 w-1/2 md:w-1/3 lg:w-1/4 mx-auto border-accent/70 mb-1"></p>

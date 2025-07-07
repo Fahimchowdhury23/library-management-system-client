@@ -119,7 +119,7 @@ const AllBooks = () => {
       </div>
 
       {!sortedBooks && (
-        <h2 className="text-center text-2xl font-bold text-accent drop-shadow mb-2">
+        <h2 className="text-center text-2xl font-bold text-accent drop-shadow">
           There is no book added yet!
         </h2>
       )}

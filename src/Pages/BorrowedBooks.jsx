@@ -26,14 +26,14 @@ const BorrowedBooks = () => {
       </div>
 
       {borrowedBooks.length === 0 ? (
-        <div className="mt-28 min-h-screen">
-          <p className="mb-3 text-xl md:text-2xl lg:text-3xl font-semibold text-center text-accent">
+        <div className="mt-40 min-h-screen">
+          <p className="text-xl md:text-2xl lg:text-3xl font-semibold text-center text-accent">
             You haven't borrowed any book yet !
           </p>
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-3 md:py-4 lg:py-6 w-full  lg:w-11/12 mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-3 md:py-4 lg:py-6 w-full lg:w-11/12 mx-auto">
             {borrowedBooks.map((book) => (
               <BorrowedBookCard
                 key={book._id}

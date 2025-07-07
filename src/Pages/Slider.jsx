@@ -21,7 +21,7 @@ const images = [
 
 const Slider = () => {
   return (
-    <div className="w-full py-2 md:py-3 mx-auto h-[40vh] md:h-[35vh] lg:h-[60vh]">
+    <div className="w-full py-2 md:py-4 mx-auto h-[40vh] md:h-[35vh] lg:h-[60vh]">
       <Swiper
         loop={true}
         effect="coverflow"

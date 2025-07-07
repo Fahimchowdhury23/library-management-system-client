@@ -32,7 +32,7 @@ const Home = () => {
         animate={{ rotateY: [0, 180, 0] }}
         transition={{ duration: 1 }}
         viewport={{ once: false }}
-        className="bg-gradient-to-r from-accent to-neutral bg-clip-text text-transparent md:text-2xl lg:text-3xl py-3 md:py-4 font-bold text-center"
+        className="bg-gradient-to-r from-accent to-neutral bg-clip-text text-transparent md:text-2xl lg:text-3xl pt-3 font-bold text-center"
       >
         Empowering Minds, One Page at a Time
       </motion.h1>
