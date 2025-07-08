@@ -3,13 +3,16 @@ import { Link, NavLink, useNavigate } from "react-router";
 import AuthContext from "../../Contexts/AuthContext";
 import toast from "react-hot-toast";
 import { HiMenuAlt1 } from "react-icons/hi";
+import { RxCross1 } from "react-icons/rx";
 import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, signOutUser } = use(AuthContext);
   const navigate = useNavigate();
   const [theme, setTheme] = useState("light");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const profileRef = useRef(null);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -55,22 +58,28 @@ const Navbar = () => {
 
   return (
     <div className="navbar bg-primary fixed top-0 z-50 shadow-md">
-      <div className="flex items-center justify-between md:justify-around flex-1">
-        <div className="dropdown dropdown-start md:hidden">
+      <div className="flex items-center justify-between lg:justify-around flex-1">
+        <div
+          onClick={(e) => {
+            e.preventDefault();
+            setIsMenuOpen(!isMenuOpen);
+          }}
+          className="dropdown dropdown-start lg:hidden"
+        >
           <div
             ref={menuRef}
             tabIndex={0}
             role="button"
-            className="btn border-0 px-3 btn-accent"
+            className="btn border-0 btn-accent"
           >
-            <HiMenuAlt1 size={20} />
+            {isMenuOpen ? <RxCross1 size={22} /> : <HiMenuAlt1 size={22} />}
           </div>
 
           <ul
             tabIndex={0}
-            className="dropdown-content menu bg-gradient-to-b from-primary to-neutral rounded-box z-1 w-46 p-2 shadow-sm"
+            className="dropdown-content menu bg-gradient-to-b from-primary to-neutral rounded-box z-1 w-50 md:w-60 text-lg md:text-xl p-2 md:p-4 shadow-sm"
           >
-            <div className="flex flex-col whitespace-nowrap font-medium lg:gap-2">
+            <div className="flex flex-col whitespace-nowrap font-medium md:gap-1">
               <NavLink
                 onClick={() => {
                   menuRef.current?.focus();
@@ -112,6 +121,16 @@ const Navbar = () => {
               >
                 Borrowed Books
               </NavLink>
+              <NavLink
+                onClick={() => {
+                  menuRef.current?.focus();
+                  menuRef.current?.blur();
+                }}
+                className="nav-link hover:bg-neutral"
+                to="/auth/login"
+              >
+                <button>Login</button>
+              </NavLink>
             </div>
           </ul>
         </div>
@@ -125,7 +144,7 @@ const Navbar = () => {
             />
           </Link>
           <Link to="/">
-            <h1 className="font-semibold text-lg md:text-2xl lg:text-3xl cursor-pointer text-accent">
+            <h1 className="font-semibold text-xl md:text-3xl cursor-pointer text-accent">
               LibraFlow
             </h1>
           </Link>
@@ -133,7 +152,7 @@ const Navbar = () => {
 
         {/* For Large Devices */}
 
-        <div className="hidden md:grid grid-flow-col gap-0 whitespace-nowrap lg:text-xl text-accent font-medium">
+        <div className="hidden lg:grid grid-flow-col gap-0 whitespace-nowrap lg:text-xl text-accent font-medium">
           <NavLink className="nav-link" to="/">
             Home
           </NavLink>
@@ -185,7 +204,7 @@ const Navbar = () => {
               <div className="p-1 md:p-1.25 hover:bg-neutral rounded-full">
                 <div
                   tabIndex={0}
-                  ref={menuRef}
+                  ref={profileRef}
                   role="button"
                   className="btn btn-ghost btn-circle avatar avatar-online"
                 >
@@ -202,8 +221,8 @@ const Navbar = () => {
                   <a
                     className="hover:bg-primary hover:text-accent active:!text-accent cursor-pointer focus:!outline-none active:!bg-primary"
                     onClick={() => {
-                      menuRef.current?.focus();
-                      menuRef.current?.blur();
+                      profileRef.current?.focus();
+                      profileRef.current?.blur();
                       navigate("/borrowedBooks");
                     }}
                   >
@@ -223,13 +242,13 @@ const Navbar = () => {
           ) : (
             <div className="flex gap-2">
               <Link to="/auth/login">
-                <button className="lg:text-lg btn bg-gradient-to-l from-neutral to-accent rounded-full p-3 lg:p-5 border-none font-semibold">
+                <button className="hidden md:flex lg:text-lg btn bg-gradient-to-r from-neutral to-accent rounded-lg p-3 md:p-4 lg:p-5 border-none font-semibold">
                   Login
                 </button>
               </Link>
 
               <Link to="/auth/register">
-                <button className="hidden md:flex lg:text-lg btn bg-gradient-to-l from-neutral to-accent rounded-full p-3 lg:p-5 border-none font-semibold">
+                <button className="hidden md:flex lg:text-lg btn bg-gradient-to-l from-neutral to-accent rounded-lg p-3 md:p-4 lg:p-5 border-none font-semibold">
                   Register
                 </button>
               </Link>
