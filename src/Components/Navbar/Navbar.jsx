@@ -57,7 +57,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar bg-secondary fixed top-0 z-50 shadow-md">
+    <div className="navbar bg-primary fixed top-0 z-50 shadow-md">
       <div className="flex items-center justify-between lg:justify-around flex-1">
         <div
           onClick={(e) => {
@@ -90,6 +90,7 @@ const Navbar = () => {
               >
                 Home
               </NavLink>
+
               <NavLink
                 onClick={() => {
                   menuRef.current?.focus();
@@ -111,6 +112,7 @@ const Navbar = () => {
               >
                 Add Book
               </NavLink>
+
               <NavLink
                 onClick={() => {
                   menuRef.current?.focus();
@@ -121,6 +123,7 @@ const Navbar = () => {
               >
                 Borrowed Books
               </NavLink>
+
               {!user && (
                 <NavLink
                   onClick={() => {
