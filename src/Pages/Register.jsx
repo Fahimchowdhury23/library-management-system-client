@@ -112,18 +112,18 @@ const Register = () => {
   };
 
   return (
-    <section className="py-8">
+    <section className="py-4 md:py-8 min-h-screen">
       <title>Register | LibraFlow</title>
-      <h2 className="text-center text-3xl font-bold text-accent drop-shadow mb-4">
+      <h2 className="text-center text-2xl md:text-3xl font-bold text-accent drop-shadow mb-2 lg:mb-4">
         Let's Get started!
       </h2>
 
-      <div className="w-full max-w-xl lg:max-w-2xl p-10 mx-auto rounded-3xl bg-white/20 backdrop-blur-xl shadow-xl">
+      <div className="w-full max-w-xl lg:max-w-2xl p-4 pb-3 md:px-8 mx-auto rounded-xl bg-white/20 backdrop-blur-xl shadow-xl">
         {/* Google Sign In */}
 
         <button
           onClick={handleGoogleSignIn}
-          className="btn rounded-2xl w-full font-semibold bg-neutral text-accent border-none transition backdrop-blur-xl"
+          className="btn rounded-xl w-full font-semibold bg-neutral text-accent border-0 transition backdrop-blur-xl"
         >
           {googleLoading ? (
             <span className="loading loading-spinner text-accent"></span>
@@ -135,13 +135,16 @@ const Register = () => {
           )}
         </button>
 
-        <form onSubmit={handleRegister} className="flex flex-col gap-3">
-          <div className="flex items-center py-3">
-            <p className="border-b-2 w-[20%] border-accent/70"></p>
-            <p className="text-center w-[60%] text-accent/70">
+        <form
+          onSubmit={handleRegister}
+          className="flex flex-col gap-2 md:gap-3"
+        >
+          <div className="flex items-center pt-3 pb-1">
+            <p className="border-b-2 w-[10%] md:w-[20%] border-accent/70"></p>
+            <p className="text-center text-sm md:text-base w-[80%] md:w-[60%] text-accent/70">
               Or Continue by filling up this form
             </p>
-            <p className="border-b-2 w-[20%] border-accent/70"></p>
+            <p className="border-b-2 w-[10%] md:w-[20%] border-accent/70"></p>
           </div>
 
           {/* Name Field */}
@@ -155,7 +158,7 @@ const Register = () => {
             type="text"
             name="name"
             required
-            className="px-4 py-3 rounded-xl bg-white text-accent placeholder-accent focus:outline-none focus:ring-1 focus:ring-accent"
+            className="px-3 py-2 rounded-xl bg-white text-accent placeholder-accent focus:outline-none focus:ring-1 focus:ring-accent"
             placeholder="Your Full Name"
           />
 
@@ -169,7 +172,7 @@ const Register = () => {
             type="text"
             name="photo"
             required
-            className="px-4 py-3 rounded-xl bg-white text-accent placeholder-accent focus:outline-none focus:ring-1 focus:ring-accent"
+            className="px-3 py-2 rounded-xl bg-white text-accent placeholder-accent focus:outline-none focus:ring-1 focus:ring-accent"
             placeholder="Your Photo URL"
           />
 
@@ -184,7 +187,7 @@ const Register = () => {
             name="email"
             autoComplete="email"
             required
-            className="px-4 py-3 rounded-xl bg-white text-accent placeholder-accent focus:outline-none focus:ring-1 focus:ring-accent"
+            className="px-3 py-2 rounded-xl bg-white text-accent placeholder-accent focus:outline-none focus:ring-1 focus:ring-accent"
             placeholder="Email address"
           />
 
@@ -200,7 +203,7 @@ const Register = () => {
               name="password"
               autoComplete="current-password"
               required
-              className="px-4 py-3 w-full rounded-xl bg-white text-accent placeholder-accent focus:outline-none focus:ring-1 focus:ring-accent"
+              className="px-3 py-2 w-full rounded-xl bg-white text-accent placeholder-accent focus:outline-none focus:ring-1 focus:ring-accent"
               placeholder="Password"
             />
             <button
@@ -208,7 +211,7 @@ const Register = () => {
                 e.preventDefault();
                 setShowPass(!showPass);
               }}
-              className="absolute top-3 right-5 cursor-pointer text-accent  text-2xl"
+              className="absolute top-3 right-5 cursor-pointer text-accent text-2xl"
             >
               {showPass ? <LuEye></LuEye> : <LuEyeClosed></LuEyeClosed>}
             </button>
@@ -216,7 +219,7 @@ const Register = () => {
 
           <button
             type="submit"
-            className="w-full btn py-3 rounded-2xl border-none text-lg bg-neutral text-accent font-medium transition backdrop-blur-xl"
+            className="w-full btn py-2 rounded-xl border-none text-lg bg-neutral text-accent font-medium transition backdrop-blur-xl"
           >
             {loading ? (
               <span className="loading loading-spinner text-accent"></span>
@@ -228,7 +231,7 @@ const Register = () => {
 
         <Link
           to="/auth/login"
-          className="font-semibold mt-6 flex justify-center hover:underline text-accent"
+          className="font-semibold mt-3 w-1/2 mx-auto whitespace-nowrap flex items-center justify-center hover:underline text-accent"
         >
           Already have an account?
         </Link>

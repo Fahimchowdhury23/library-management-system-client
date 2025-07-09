@@ -102,7 +102,7 @@ const Login = () => {
       .finally(() => setGoogleLoading(false));
   };
   return (
-    <section className="py-4 md:py-6 lg:py-16 xl:py-20">
+    <section className="py-4 md:py-6 lg:py-16 xl:py-20 min-h-screen">
       <title>Login | LibraFlow</title>
       <div className="grid grid-cols-1 max-w-2xl lg:max-w-full mx-auto lg:mx-0 gap-2 md:gap-4 lg:gap-0 lg:grid-cols-2">
         <div className="flex flex-col w-full rounded-xl lg:rounded-r-none items-center justify-center bg-gradient-to-b from-neutral to-primary shadow-xl">
