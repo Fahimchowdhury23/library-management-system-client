@@ -121,16 +121,18 @@ const Navbar = () => {
               >
                 Borrowed Books
               </NavLink>
-              <NavLink
-                onClick={() => {
-                  menuRef.current?.focus();
-                  menuRef.current?.blur();
-                }}
-                className="nav-link hover:bg-neutral"
-                to="/auth/login"
-              >
-                <button>Login</button>
-              </NavLink>
+              {!user && (
+                <NavLink
+                  onClick={() => {
+                    menuRef.current?.focus();
+                    menuRef.current?.blur();
+                  }}
+                  className="nav-link hover:bg-neutral"
+                  to="/auth/login"
+                >
+                  <button>Login</button>
+                </NavLink>
+              )}
             </div>
           </ul>
         </div>
